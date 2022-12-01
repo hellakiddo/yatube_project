@@ -8,7 +8,7 @@ User = get_user_model()
 
 class Group(models.Model):
     title = models.TextField()
-    slug = models.SlugField('posts:group/<pk>')
+    slug = models.SlugField(default='some string')
     description = models.CharField(max_length=10000, default='some string')
 
     def __str__(self):
@@ -18,7 +18,7 @@ class Group(models.Model):
 class Post(models.Model):
     text = models.TextField()
     pub_date = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE,
-                               related_name='posts')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, blank=True, null=True,
-                              on_delete=models.CASCADE)
+                              on_delete=models.CASCADE,
+                              related_name='posts')
